@@ -1,6 +1,5 @@
 package com.devsuperior.dscatalog.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsuperior.dscatalog.entities.Category;
+import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.services.CategoryService;
 
 //Annotation definindo essa classe é um recurso Rest
@@ -26,10 +25,10 @@ public class CategoryResource {
 	
 	//Encapsular uma resposta http e é do tipo geneeric
 	@GetMapping
-	public ResponseEntity<List<Category>> findAll(){
+	public ResponseEntity<List<CategoryDTO>> findAll(){
 		
 		//Lista de categorias que através do recurso service busca todos os dados do bd
-		List<Category> list = service.findAll();
+		List<CategoryDTO> list = service.findAll();
 		
 		return ResponseEntity.ok().body(list);
 		
