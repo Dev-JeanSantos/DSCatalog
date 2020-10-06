@@ -9,7 +9,4 @@ public class DataBaseException extends RuntimeException{
 		super(msg);
 	}
 	
-	
-	
-	
 }
