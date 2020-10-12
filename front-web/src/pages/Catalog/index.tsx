@@ -1,30 +1,49 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
+import { ProductsResponse } from '../../core/types/Product';
+import makeRequest from '../../core/utils/request';
 import ProductsCard from './Components/ProductsCard';
 import './styles.scss'
 
-const  Catalog= () =>(
-    <div className="catalog-container">
-        <h1 className="catalog-title">
-            Catálogo de Produtos
-        </h1>
-        <div className="catalog-produtcs">
-           <Link to="/products/1"> <ProductsCard/></Link>
-           <Link to="/products/2"> <ProductsCard/></Link>
-           <Link to="/products/3"> <ProductsCard/></Link>
-           <Link to="/products/4"> <ProductsCard/></Link>
-           <Link to="/products/5"> <ProductsCard/></Link>
-           <Link to="/products/6"> <ProductsCard/></Link>
-           <Link to="/products/7"> <ProductsCard/></Link>
-           <Link to="/products/8"> <ProductsCard/></Link>
-           <Link to="/products/9"> <ProductsCard/></Link>
-           <Link to="/products/10"> <ProductsCard/></Link>
-           <Link to="/products/11"> <ProductsCard/></Link>
-           <Link to="/products/12"> <ProductsCard/></Link>
-           <Link to="/products/13"> <ProductsCard/></Link>
-           <Link to="/products/14"> <ProductsCard/></Link>           
+const Catalog = () => {
+
+    const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
+
+    console.log(productsResponse);
+
+
+
+    //PASSO 2 
+    useEffect(() => {
+
+
+        //PASSO 6 PARAMENTROS QUE REFINAM A BUSCA
+        const params = {
+            page: 0,
+            linesPerPage: 12
+        }
+
+        //PASSO 5 INTEGRAÇÃO DO AXIOS ATRAVES DE UM OBJETO EXPORTADO
+
+        makeRequest({ url: '/products', params })
+            .then(response => setProductsResponse(response.data));
+
+    }, []);
+
+    return (
+        <div className="catalog-container">
+            <h1 className="catalog-title">
+                Catálogo de Produtos
+            </h1>
+            <div className="catalog-produtcs">
+                {productsResponse?.content.map(product => (
+                    <Link to={`/products/${product.id}`} key={product.id}>
+                        <ProductsCard product={product} />
+                    </Link>
+                ))}
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default Catalog;
