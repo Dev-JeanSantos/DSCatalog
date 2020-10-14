@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { ProductsResponse } from '../../core/types/Product';
-import makeRequest from '../../core/utils/request';
+import { ProductsResponse } from 'core/types/Product';
+import makeRequest from 'core/utils/request';
+import ProductCatalogLoad from './Components/Loaders/ProductCatalogLoad';
 import ProductsCard from './Components/ProductsCard';
 import './styles.scss'
 
 const Catalog = () => {
 
     const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
-
+    const [isLoadind, setIsLoading] = useState(false);
     console.log(productsResponse);
+
 
 
 
@@ -24,9 +26,12 @@ const Catalog = () => {
         }
 
         //PASSO 5 INTEGRAÇÃO DO AXIOS ATRAVES DE UM OBJETO EXPORTADO
-
+        setIsLoading(true);
         makeRequest({ url: '/products', params })
-            .then(response => setProductsResponse(response.data));
+            .then(response => setProductsResponse(response.data))
+            .finally(()=> {
+                setIsLoading(false);
+            })
 
     }, []);
 
@@ -36,11 +41,13 @@ const Catalog = () => {
                 Catálogo de Produtos
             </h1>
             <div className="catalog-produtcs">
-                {productsResponse?.content.map(product => (
-                    <Link to={`/products/${product.id}`} key={product.id}>
-                        <ProductsCard product={product} />
-                    </Link>
-                ))}
+                {isLoadind ? <ProductCatalogLoad/> : (
+                    productsResponse?.content.map(product => (
+                        <Link to={`/products/${product.id}`} key={product.id}>
+                            <ProductsCard product={product} />
+                        </Link>
+                    ))
+                )}
             </div>
         </div>
     );
