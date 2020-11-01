@@ -2,6 +2,8 @@ package com.devsuperior.dscatalog.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 import com.devsuperior.dscatalog.entities.Category;
 
 //Cria um modelo de Objeto e entrega ao controlador esse mesmo objeto de acordo com suas necessidades
@@ -10,6 +12,7 @@ public class CategoryDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	@NotBlank(message = "Campo Obrigatório")
 	private String name;
 	
 	public CategoryDTO() {
