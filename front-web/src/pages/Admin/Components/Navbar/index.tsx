@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import './styles.scss';
 
 
@@ -7,14 +8,14 @@ const Navbar = () =>(
     <nav className="admin-nav-container">
         <ul>
             <li>
-                <a href="link" className="admin-nav-item active">Meus Produtos</a>
+                <NavLink to="/admin/products"  className="admin-nav-item ">Meus Produtos</NavLink>
             </li>
             <li>
-                <a href="link" className="admin-nav-item">Meus Categorias</a>    
+                <NavLink to="/admin/categories"  className="admin-nav-item">Minhas Categorias</NavLink>
             </li>
             <li>
-                <a href="link" className="admin-nav-item">Meus Usuários</a>
-            </li>
+                <NavLink to="/admin/users"  className="admin-nav-item">Meus Usuários</NavLink>
+    </li>
         </ul>
     </nav>
 );
