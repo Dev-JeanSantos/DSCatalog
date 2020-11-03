@@ -1,5 +1,4 @@
 import makeRequest from 'core/utils/request';
-import { type } from 'os';
 import React, { useState } from 'react';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
