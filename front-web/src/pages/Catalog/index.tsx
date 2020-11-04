@@ -21,7 +21,7 @@ const Catalog = () => {
 
         //PASSO 6 PARAMENTROS QUE REFINAM A BUSCA
         const params = {
-            page: 0,
+            page: 1,
             linesPerPage: 12
         }
 

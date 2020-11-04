@@ -1,4 +1,4 @@
-import makeRequest from 'core/utils/request';
+import { makePrivateRequest } from 'core/utils/request';
 import React, { useState } from 'react';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
@@ -35,10 +35,11 @@ const Form = () => {
 
         const payload = {
             ...formData,
+            imgUrl: 'https://img.olx.com.br/images/69/693010582754414.jpg',
             categories: [{id: formData.category}]
         }
         
-        makeRequest({url: '/products', method: 'POST', data: payload });
+        makePrivateRequest({url: '/products', method: 'POST', data: payload });
         console.log(payload);
     }
 

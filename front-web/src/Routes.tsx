@@ -1,6 +1,7 @@
+import history from 'core/utils/history';
 import Auth from 'pages/Auth';
 import React from 'react';
-import { BrowserRouter, Redirect, Route, Switch} from 'react-router-dom'
+import { Router, Redirect, Route, Switch} from 'react-router-dom'
 import Navbar from './core/components/Navbar';
 import Admin from './pages/Admin';
 import Catalog from './pages/Catalog';
@@ -9,7 +10,7 @@ import Home from './pages/Home';
 
 const Routes = () =>(
     
-    <BrowserRouter>
+    <Router history={history}>
         <Navbar/>
         <Switch>
             <Route path="/" exact>
@@ -30,7 +31,7 @@ const Routes = () =>(
                 <Admin/>
             </Route>
         </Switch>
-    </BrowserRouter>
+    </Router>
 )
 
 export default Routes;
