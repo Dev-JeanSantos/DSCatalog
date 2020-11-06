@@ -5,12 +5,13 @@ import makeRequest from 'core/utils/request';
 import ProductCatalogLoad from './Components/Loaders/ProductCatalogLoad';
 import ProductsCard from './Components/ProductsCard';
 import './styles.scss'
+import Pagination from 'core/components/Pagination';
 
 const Catalog = () => {
 
     const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
     const [isLoadind, setIsLoading] = useState(false);
-    console.log(productsResponse);
+    const [activePage, setActivePage ] = useState(0);
 
 
 
@@ -21,8 +22,8 @@ const Catalog = () => {
 
         //PASSO 6 PARAMENTROS QUE REFINAM A BUSCA
         const params = {
-            page: 1,
-            linesPerPage: 12
+            page: activePage,
+            linesPerPage: 10
         }
 
         //PASSO 5 INTEGRAÇÃO DO AXIOS ATRAVES DE UM OBJETO EXPORTADO
@@ -33,7 +34,7 @@ const Catalog = () => {
                 setIsLoading(false);
             })
 
-    }, []);
+    }, [activePage]);
 
     return (
         <div className="catalog-container">
@@ -49,6 +50,13 @@ const Catalog = () => {
                     ))
                 )}
             </div>
+            {productsResponse && 
+                <Pagination 
+                totalPages={productsResponse.totalPages}
+                activePage={activePage}
+                onChange={page => setActivePage(page)}
+                
+                />}
         </div>
     );
 };
