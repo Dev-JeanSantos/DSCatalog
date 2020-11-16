@@ -1,15 +1,22 @@
 package com.devsuperior.dscatalog.repositories;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
 
-//Interface Responsavel ao acesso aos dados que extends ao JPARepository que recebe o tipo do objeto e tipo de seu ID
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 	
-	
-	
+	@Query("SELECT DISTINCT obj FROM Product obj INNER JOIN obj.categories cats WHERE "
+			+ "(COALESCE(:categories) IS NULL OR cats IN :categories) AND"
+			+ "(LOWER(obj.name) LIKE LOWER(CONCAT('%',:name,'%'))) ")
+	Page<Product> search(String name, List<Category> categories, Pageable pageable);
 	
 }

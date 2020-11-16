@@ -23,46 +23,38 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.devsuperior.dscatalog.dto.ProductDTO;
 import com.devsuperior.dscatalog.services.ProductService;
 
-//Annotation definindo essa classe é um recurso Rest
 @RestController
-//Annotation definindo a rota de api (rest)
 @RequestMapping(value = "/products")
 public class ProductResource {
 
-	// Aqui é reaizazada a Criação de END POINTS
-
-	// Chamada do serviço
 	@Autowired
 	private ProductService service;
 
-	// Encapsular uma resposta http e é do tipo geneeric
 	@GetMapping
-	public ResponseEntity<Page<ProductDTO>> findAllPaged(
+	public ResponseEntity<Page<ProductDTO>> findAll(
 			
+			@RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
+			@RequestParam(value = "name", defaultValue = "") String name,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction,
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy			
-			){
-		
+			){		
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage,Direction.valueOf(direction), orderBy );
 		
-		//Lista de categorias que através do recurso service busca todos os dados do bd
-		Page<ProductDTO> list = service.findAllPaged(pageRequest);
+		Page<ProductDTO> list = service.findAllPaged(name.trim(), categoryId, pageRequest);
 		
 		return ResponseEntity.ok().body(list);
 	}
-	//Novo EndPoint buscar por ID	
+	
 	@GetMapping(value = "/{id}")//recebe o id pesquisado
 	public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
 		
 		ProductDTO dto = service.findById(id);
 		
 		return ResponseEntity.ok().body(dto);
-
 	}
 	
-	//Novo EndPoint Inserir Categoria
 	@PostMapping
 	public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto){
 		dto = service.insert(dto);
@@ -71,16 +63,13 @@ public class ProductResource {
 				.buildAndExpand(dto.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(dto);
-		
-		
 	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<ProductDTO> update(@PathVariable Long id,@Valid @RequestBody ProductDTO dto){
 		dto = service.update(id, dto);
 		
-		return ResponseEntity.ok().body(dto);			
-		
+		return ResponseEntity.ok().body(dto);				
 	}
 	
 	
@@ -91,10 +80,4 @@ public class ProductResource {
 		return ResponseEntity.noContent().build();
 		
 	}
-	
-	
-	
-	
-	
-
 }

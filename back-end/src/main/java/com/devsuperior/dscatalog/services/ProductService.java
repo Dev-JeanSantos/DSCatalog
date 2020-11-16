@@ -1,5 +1,7 @@
 package com.devsuperior.dscatalog.services;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -29,30 +31,16 @@ public class ProductService {
 	private ProductRepository repository;
 	
 	@Autowired
-	private CategoryRepository CategoryRepository;
+	private CategoryRepository categoryRepository;
 	
 	@Transactional(readOnly = true)
-	public Page<ProductDTO> findAllPaged(PageRequest pageRequest){
+	public Page<ProductDTO> findAllPaged(String name, Long categoryId, PageRequest pageRequest){
 		
-		Page<Product> list = repository.findAll(pageRequest);
+		List<Category> categories = (categoryId == 0) ? null : Arrays.asList(categoryRepository.getOne(categoryId));
 		
-		//Modelo de Conversão I
-		//Atraves de um for convertemos a entidade category p/ categoryDAO
-		/*
-		List<ProductDTO> listDTO = new ArrayList<>();
-		for (Product cat : list) {
-			listDTO.add(new ProductDTO(cat));
-		}
-		*/
+		Page<Product> list = repository.search(name, categories, pageRequest);
 		
-		//Modelo Conversão II
-		//Atraves de expressão Lambda (alta ordem)		
-		//return  list.stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
-		
-		return  list.map(x -> new ProductDTO(x));
-		
-
-		
+		return  list.map(x -> new ProductDTO(x));		
 	}
 	
 	@Transactional(readOnly = true)
@@ -118,7 +106,7 @@ public class ProductService {
 		
 		entity.getCategories().clear();
 		for (CategoryDTO catDTO : dto.getCategories()) {
-			Category category = CategoryRepository.getOne(catDTO.getId());
+			Category category = categoryRepository.getOne(catDTO.getId());
 			entity.getCategories().add(category);
 		}
 		
