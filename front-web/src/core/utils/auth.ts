@@ -21,7 +21,7 @@ type AccessToken = {
     authorities: Role[];
 }
 
-export const saveSessionData = (loginResponse: LoginResponse) =>{
+export const saveSessionData = (loginResponse: LoginResponse) => {
     localStorage.setItem('authData', JSON.stringify(loginResponse));
 
 }
@@ -37,9 +37,14 @@ export const getSessionData = () => {
 export const getAccessTokenDecoded = () => {
     const sessionData = getSessionData();
 
-    const tokenDecoded = jwtDecode(sessionData.access_token);
-
-    return tokenDecoded as AccessToken;
+    try {
+        const tokenDecoded = jwtDecode(sessionData.access_token);
+        return tokenDecoded as AccessToken;
+    }catch(error){
+        return {} as AccessToken;
+    }
+        
+    
 }
 
 export const isTokenValid = () => {
@@ -52,15 +57,15 @@ export const isAuthenticated = () => {
 
     const sessionData = getSessionData();
 
-    return sessionData.access_token && isTokenValid(); 
+    return sessionData.access_token && isTokenValid();
 }
 
 export const isAllowedByRole = (routesRoles: Role[] = []) => {
-   
-    if(routesRoles.length === 0){
+
+    if (routesRoles.length === 0) {
         return true;
-    }   
+    }
     const { authorities } = getAccessTokenDecoded();
-    
-    return routesRoles.some(role => authorities.includes(role));
+
+    return routesRoles.some(role => authorities?.includes(role));
 }
