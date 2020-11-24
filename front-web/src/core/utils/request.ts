@@ -1,7 +1,6 @@
 import axios, { Method } from 'axios';
-import { CLIENT_ID, CLIENT_SECRET, getSessionData } from './auth';
+import { CLIENT_ID, CLIENT_SECRET, getSessionData, logout } from './auth';
 import qs from 'qs';
-import history from './history';
 
 
 
@@ -25,7 +24,7 @@ axios.interceptors.response.use(function (response){
     return response;
 }, function (error){
     if(error.response.status === 401){
-        history.push('/admin/auth/login');
+        logout();
     }
     return Promise.reject(error);
 });
