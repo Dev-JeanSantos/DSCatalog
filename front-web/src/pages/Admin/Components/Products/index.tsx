@@ -4,17 +4,14 @@ import Form from './Form';
 import List from './List';
 import './styles.scss';
 const Products = () => {
-   return(
+    return (
         <div className="">
             <Switch>
                 <Route path="/admin/products" exact>
-                   <List/>
-                </Route>
-                <Route path="/admin/products/create">
-                <Form/>
+                    <List />
                 </Route>
                 <Route path="/admin/products/:productId">
-                    <h1>Editar um Produto</h1>
+                    <Form />
                 </Route>
             </Switch>
         </div>
