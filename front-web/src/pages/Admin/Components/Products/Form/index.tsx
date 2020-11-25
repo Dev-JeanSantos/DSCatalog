@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import makeRequest, { makePrivateRequest } from 'core/utils/request';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import {toast } from 'react-toastify';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
 import { useHistory, useParams } from 'react-router-dom';
@@ -44,7 +44,7 @@ const Form = () => {
             method: isEditing ? 'PUT' : 'POST', 
             data 
         })
-        .then(() => {           
+        .then(() => {        
             toast.info('Produto salvo com sucesso!');
             history.push('/admin/products');
         })
