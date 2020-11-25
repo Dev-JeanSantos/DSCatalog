@@ -1,7 +1,7 @@
 import Pagination from 'core/components/Pagination';
 import { ProductsResponse } from 'core/types/Product';
 import makeRequest, { makePrivateRequest } from 'core/utils/request';
-import ProductInfoLoader from 'pages/Catalog/Components/Loaders/ProductInfoLoader';
+import ProductInfoLoader from '../Loaders/ProductCardLoader';
 import React, { useEffect, useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
