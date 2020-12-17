@@ -13,17 +13,12 @@ const Catalog = () => {
     const [isLoadind, setIsLoading] = useState(false);
     const [activePage, setActivePage ] = useState(0);
 
-
-
-
     //PASSO 2 
     useEffect(() => {
-
-
         //PASSO 6 PARAMENTROS QUE REFINAM A BUSCA
         const params = {
             page: activePage,
-            linesPerPage: 10
+            linesPerPage: 12
         }
 
         //PASSO 5 INTEGRAÇÃO DO AXIOS ATRAVES DE UM OBJETO EXPORTADO
@@ -33,7 +28,6 @@ const Catalog = () => {
             .finally(()=> {
                 setIsLoading(false);
             })
-
     }, [activePage]);
 
     return (
