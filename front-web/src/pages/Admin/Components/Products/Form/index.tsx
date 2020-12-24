@@ -81,6 +81,7 @@ const Form = () => {
                                 type="text"
                                 className="form-control mt-3 input-base"
                                 placeholder="Nome do Produto"
+                                data-testid="name"
                             />
                             {errors.name && (
                                 <div className="invalid-feedback d-block">
@@ -89,6 +90,7 @@ const Form = () => {
                             )}
                         </div>
                         <div className="margin-bottom-30">
+                        <label htmlFor="categories" className="d-none">Categorias</label>
                          <Controller
                             as={Select} 
                             name="categories"
@@ -101,6 +103,8 @@ const Form = () => {
                             isMulti
                             classNamePrefix="categories-select"
                             placeholder="Categorias"
+                            inputId="categories"
+                            defaultValue=""
                           />
                           {errors.categories && (
                                 <div className="invalid-feedback d-block">
@@ -115,6 +119,7 @@ const Form = () => {
                                 type="number"
                                 className="form-control  input-base"
                                 placeholder="Preço"
+                                data-testid="price"
                             />
                             {errors.price && (
                                 <div className="invalid-feedback d-block">
@@ -129,6 +134,7 @@ const Form = () => {
                                 type="text"
                                 className="form-control mt-3 input-base"
                                 placeholder="Imagem do produto"
+                                data-testid="imgUrl"
                             />
                             {errors.imgUrl && (
                                 <div className="invalid-feedback d-block">
@@ -142,6 +148,7 @@ const Form = () => {
                             ref={register({ required: "Campo Obrigatório" })}
                             placeholder="Descrição"
                             name="description"
+                            data-testid="description"
                             cols={30}
                             rows={10}
                         />
