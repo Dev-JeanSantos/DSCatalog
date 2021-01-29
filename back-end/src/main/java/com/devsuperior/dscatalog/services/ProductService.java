@@ -13,9 +13,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.dto.ProductDTO;
+import com.devsuperior.dscatalog.dto.UriDTO;
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.repositories.CategoryRepository;
@@ -109,5 +111,10 @@ public class ProductService {
 			entity.getCategories().add(category);
 		}
 		
+	}
+
+	public UriDTO uploadFile(MultipartFile file) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
